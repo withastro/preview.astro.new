@@ -6,6 +6,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { downloadTemplates } from './download.mjs';
 import { cleanAndCreateDirectory } from './utils/cleanAndCreateDirectory.mjs';
+import { baseInject } from './base-integration/integration.mjs';
 
 /** Directory to download Astro starter templates to. */
 const templateDir = '.templates';
@@ -36,6 +37,7 @@ for (const dir of templates) {
 		logLevel: 'error',
 		base: dir.name,
 		trailingSlash: 'always',
+		integrations: [baseInject({ base: dir.name })],
 	});
 	// Move the build output to shared `dist/` directory.
 	fs.rename(path.join(root, 'dist'), path.join(buildDir, dir.name));
