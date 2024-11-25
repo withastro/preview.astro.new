@@ -1,6 +1,6 @@
 // @ts-check
 
-import { base } from 'virtual:preview.astro.new/base';
+import { base, skipPrefixed } from 'virtual:preview.astro.new/base';
 import { parseHTML, HTMLAnchorElement, HTMLImageElement } from 'linkedom';
 
 /**
@@ -25,7 +25,8 @@ const isPrefixed = (url) => Boolean(url?.startsWith(base));
  * Check if a URL should be prefixed with base.
  * @param {string} url
  */
-const shouldPrefix = (url) => isRelative(url) && !isPrefixed(url); // && !isAstroAssetUrl(url);
+const shouldPrefix = (url) =>
+	isRelative(url) && !isAstroAssetUrl(url) && (!skipPrefixed || !isPrefixed(url));
 
 /** @type {import("astro").MiddlewareHandler} */
 export async function onRequest(request, next) {

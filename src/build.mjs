@@ -20,6 +20,23 @@ const buildDir = 'dist';
  */
 const blocklist = ['component', 'integration', 'toolbar-app', 'ssr'];
 
+/**
+ * @typedef SiteOptions
+ * @prop {boolean} [skipPrefixed] Whether links that start with the base path should be skipped when prefixing with base.
+ * When `true`, for a site with `base: 'blog'`, a link to `/blog/post` would not receive an additional `/blog/` segment.
+ */
+
+/**
+ * Template-specific configuration options to change how the build behaves.
+ * @type {Record<string, SiteOptions>}
+ */
+const templateConfig = {
+	// Starlight prefixes global navigation links with base correctly. Those should not get an additional prefix.
+	'starlight-basics': { skipPrefixed: true },
+	'starlight-markdoc': { skipPrefixed: true },
+	'starlight-tailwind': { skipPrefixed: true },
+};
+
 // Create output directory
 await cleanAndCreateDirectory(buildDir);
 
@@ -32,6 +49,8 @@ for (const dir of templates) {
 	if (blocklist.includes(dir.name)) continue;
 	const building = createSpinner(`Building ${dir.name}`).start();
 	const root = path.join(dir.parentPath, dir.name);
+	// Get configuration options for this template.
+	const { skipPrefixed = false } = templateConfig[dir.name] || {};
 	// Build example with Astro.
 	// We change CWD instead of using Astro’s `root` option because examples using Tailwind failed
 	// to find the Tailwind config file when using `root`.
@@ -41,7 +60,7 @@ for (const dir of templates) {
 		logLevel: 'error',
 		base: dir.name,
 		trailingSlash: 'always',
-		integrations: [baseInject({ base: dir.name })],
+		integrations: [baseInject({ base: dir.name, skipPrefixed })],
 	});
 	process.chdir(initialCWD);
 	// Move the build output to shared `dist/` directory.
