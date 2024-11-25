@@ -3,12 +3,29 @@
 import { base } from 'virtual:preview.astro.new/base';
 import { parseHTML, HTMLAnchorElement, HTMLImageElement } from 'linkedom';
 
-/** @param {string} url */
+/**
+ * Check if a URL is relative.
+ * @param {string} url
+ */
 const isRelative = (url) => Boolean(url?.[0] === '/' && url?.[1] !== '/');
-/** @param {string} url */
+
+/**
+ * Check if a URL is most likely an Astro-processed asset, which will already be prefixed with base.
+ * @param {string} url
+ */
 const isAstroAssetUrl = (url) => Boolean(url?.includes('/_astro/'));
-/** @param {string} url */
-const shouldPrefix = (url) => isRelative(url) && !isAstroAssetUrl(url);
+
+/**
+ * Check if a URL has already been prefixed with the required base.
+ * @param {string} url
+ */
+const isPrefixed = (url) => Boolean(url?.startsWith(base));
+
+/**
+ * Check if a URL should be prefixed with base.
+ * @param {string} url
+ */
+const shouldPrefix = (url) => isRelative(url) && !isPrefixed(url); // && !isAstroAssetUrl(url);
 
 /** @type {import("astro").MiddlewareHandler} */
 export async function onRequest(request, next) {
@@ -27,7 +44,7 @@ export async function onRequest(request, next) {
 	// Add base to image sources.
 	document.querySelectorAll('[src]').forEach((element) => {
 		if (!(element instanceof HTMLImageElement)) return;
-		if (shouldPrefix(element.src) && !isAstroAssetUrl(element.src)) {
+		if (shouldPrefix(element.src)) {
 			element.src = base + element.src.slice(1);
 		}
 	});
