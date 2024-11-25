@@ -7,6 +7,8 @@ import fs from 'node:fs/promises';
  * @param {string} dirName Name of the directory to create.
  */
 export async function cleanAndCreateDirectory(dirName) {
-	await fs.rm(dirName, { force: true, recursive: true });
+	try {
+		await fs.rm(dirName, { force: true, recursive: true });
+	} catch {}
 	await fs.mkdir(dirName);
 }
