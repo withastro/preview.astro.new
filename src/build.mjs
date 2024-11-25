@@ -64,6 +64,6 @@ for (const dir of templates) {
 	});
 	process.chdir(initialCWD);
 	// Move the build output to shared `dist/` directory.
-	fs.rename(path.join(root, 'dist'), path.join(buildDir, dir.name));
+	await fs.rename(path.join(root, 'dist'), path.join(buildDir, dir.name));
 	building.success();
 }
