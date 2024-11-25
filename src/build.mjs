@@ -18,7 +18,7 @@ const buildDir = 'dist';
  * Examples to skip when building.
  * These examples are not Astro projects so cannot be built/previewed or require SSR which won’t work in this deployment model.
  */
-const blocklist = ['component', 'integration', 'toolbar-app', 'ssr'];
+const blocklist = ['component', 'integration', 'toolbar-app', 'ssr', 'hackernews'];
 
 /**
  * @typedef SiteOptions
