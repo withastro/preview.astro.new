@@ -21,7 +21,7 @@ const buildDir = 'dist';
 const blocklist = ['component', 'integration', 'toolbar-app', 'ssr'];
 
 // Create output directory
-cleanAndCreateDirectory(buildDir);
+await cleanAndCreateDirectory(buildDir);
 
 await downloadTemplates(templateDir, 'latest');
 

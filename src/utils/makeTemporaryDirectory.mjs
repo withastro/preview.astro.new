@@ -13,6 +13,6 @@ import { cleanAndCreateDirectory } from './cleanAndCreateDirectory.mjs';
 export async function makeTemporaryDirectory(dirName) {
 	const tmpRoot = await fs.realpath(os.tmpdir());
 	const fullPath = path.join(tmpRoot, dirName);
-	cleanAndCreateDirectory(fullPath);
+	await cleanAndCreateDirectory(fullPath);
 	return fullPath;
 }
