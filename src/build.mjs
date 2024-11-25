@@ -2,7 +2,6 @@
 
 import { build } from 'astro';
 import { createSpinner } from 'nanospinner';
-import child_process from 'node:child_process';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import { downloadTemplates } from './download.mjs';
@@ -21,18 +20,7 @@ const blocklist = ['component', 'toolbar-app', 'ssr'];
 // Create output directory
 cleanAndCreateDirectory(buildDir);
 
-const downloading = createSpinner('Downloading template files from GitHub').start();
 await downloadTemplates(templateDir, 'latest');
-downloading.success();
-
-const installing = createSpinner('Installing template dependencies with pnpm').start();
-const result = child_process.spawnSync('pnpm', ['install'], { encoding: 'utf-8' });
-if (result.error) {
-	installing.error();
-	throw result.error;
-} else {
-	installing.success();
-}
 
 // Build templates.
 const templates = await fs.readdir(templateDir, { withFileTypes: true });
