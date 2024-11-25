@@ -1,4 +1,5 @@
 // @ts-check
+/// <reference types="./virtual.d.ts" />
 
 import { fileURLToPath } from 'node:url';
 import { vitePluginVirtualModules } from './vite-plugin-virtual-modules.mjs';
