@@ -43,10 +43,10 @@ await cleanAndCreateDirectory(buildDir);
 await downloadTemplates(templateDir, 'latest');
 
 // Build templates.
-const templates = await fs.readdir(templateDir, { withFileTypes: true });
+const templates = (await fs.readdir(templateDir, { withFileTypes: true })).filter(
+	(dir) => dir.isDirectory() && !blocklist.includes(dir.name)
+);
 for (const dir of templates) {
-	if (!dir.isDirectory()) continue;
-	if (blocklist.includes(dir.name)) continue;
 	const building = createSpinner(`Building ${dir.name}`).start();
 	const root = path.join(dir.parentPath, dir.name);
 	// Get configuration options for this template.
@@ -67,3 +67,12 @@ for (const dir of templates) {
 	await fs.rename(path.join(root, 'dist'), path.join(buildDir, dir.name));
 	building.success();
 }
+
+// Add API route for astro.new to use
+await fs.writeFile(
+	path.join(buildDir, 'metadata.json'),
+	JSON.stringify({
+		previews: templates.map((dir) => dir.name),
+	}),
+	'utf-8'
+);
