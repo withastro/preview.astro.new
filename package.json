@@ -4,7 +4,8 @@
 	"version": "0.0.0",
 	"description": "Build and preview Astro’s official starter templates",
 	"scripts": {
-		"build": "node ./src/build.mjs"
+		"build": "node ./src/build.mjs",
+		"preview": "pnpm dlx serve dist"
 	},
 	"keywords": [],
 	"author": "Chris Swithinbank <swithinbank@gmail.com>",
