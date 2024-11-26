@@ -42,9 +42,8 @@ export async function downloadTemplates(outDir, ref = 'latest') {
 
 	// Install dependencies to add things needed by templates.
 	const installing = createSpinner('Installing template dependencies with pnpm').start();
-	const result = child_process.spawnSync('pnpm', ['install'], {
+	const result = child_process.spawnSync('pnpm', ['install', '--no-frozen-lockfile'], {
 		encoding: 'utf-8',
-		stdio: 'inherit',
 	});
 	if (result.error) {
 		installing.error();
