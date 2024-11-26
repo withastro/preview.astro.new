@@ -33,7 +33,10 @@ export async function downloadTemplates(outDir, ref = 'latest') {
 	const starlightExamples = await fs.readdir(temporaryDir, { withFileTypes: true });
 	for (const dir of starlightExamples) {
 		if (!dir.isDirectory()) continue;
-		fs.rename(path.join(temporaryDir, dir.name), path.join(outDir, toStarlightName(dir.name)));
+		await fs.rename(
+			path.join(temporaryDir, dir.name),
+			path.join(outDir, toStarlightName(dir.name))
+		);
 	}
 	downloading.success();
 
