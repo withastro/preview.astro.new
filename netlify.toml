@@ -1,0 +1,16 @@
+# Tell crawlers not to index the previews
+[[headers]]
+for = "/*"
+[headers.values]
+X-Robots-Tag = '''
+  noindex,
+  indexifembedded'''
+
+# Cache assets in `_astro/` for each starter
+[[headers]]
+for = "/*/_astro/*"
+[headers.values]
+cache-control = '''
+  public,
+  max-age=604800,
+  immutable'''
