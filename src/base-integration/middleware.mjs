@@ -1,7 +1,7 @@
 // @ts-check
 
 import { base, skipPrefixed } from 'virtual:preview.astro.new/base';
-import { parseHTML, HTMLAnchorElement, HTMLImageElement } from 'linkedom';
+import { parseHTML, HTMLAnchorElement, HTMLImageElement, HTMLLinkElement } from 'linkedom';
 
 /**
  * Check if a URL is relative.
@@ -34,11 +34,12 @@ export async function onRequest(request, next) {
 	const html = await response.text();
 	const { document } = parseHTML(html);
 
-	// Add base to links.
+	// Add base to `<a>` and `<link>` tags.
 	document.querySelectorAll('[href]').forEach((element) => {
-		if (!(element instanceof HTMLAnchorElement)) return;
-		if (shouldPrefix(element.href)) {
-			element.href = base + element.href.slice(1);
+		if (element instanceof HTMLAnchorElement || element instanceof HTMLLinkElement) {
+			if (shouldPrefix(element.href)) {
+				element.href = base + element.href.slice(1);
+			}
 		}
 	});
 
