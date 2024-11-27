@@ -8,10 +8,10 @@ const entrypoint = fileURLToPath(new URL('./middleware.mjs', import.meta.url));
 
 /**
  * Astro integration which adds middleware to inject a base URL into links.
- * @param {{ base: string; skipPrefixed: boolean }} options
+ * @param {{ base: string; noDuplicateLinkPrefixes: boolean }} options
  * @returns {import("astro").AstroIntegration}
  */
-export function baseInject({ base = '/', skipPrefixed = false }) {
+export function baseInject({ base = '/', noDuplicateLinkPrefixes = false }) {
 	// Ensure base has leading and trailing slashes.
 	if (base[0] !== '/') base = '/' + base;
 	if (base.at(-1) !== '/') base += '/';
@@ -26,7 +26,9 @@ export function baseInject({ base = '/', skipPrefixed = false }) {
 							vitePluginVirtualModules({
 								'virtual:preview.astro.new/base':
 									`export const base = ${JSON.stringify(base)};` +
-									`export const skipPrefixed = ${JSON.stringify(skipPrefixed)};`,
+									`export const noDuplicateLinkPrefixes = ${JSON.stringify(
+										noDuplicateLinkPrefixes
+									)};`,
 							}),
 						],
 					},

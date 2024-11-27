@@ -1,6 +1,6 @@
 // @ts-check
 
-import { base, skipPrefixed } from 'virtual:preview.astro.new/base';
+import { base, noDuplicateLinkPrefixes } from 'virtual:preview.astro.new/base';
 import { parseHTML, HTMLAnchorElement, HTMLImageElement, HTMLLinkElement } from 'linkedom';
 
 /**
@@ -26,7 +26,7 @@ const isPrefixed = (url) => Boolean(url?.startsWith(base));
  * @param {string} url
  */
 const shouldPrefix = (url) =>
-	isRelative(url) && !isAstroAssetUrl(url) && (!skipPrefixed || !isPrefixed(url));
+	isRelative(url) && !isAstroAssetUrl(url) && (!noDuplicateLinkPrefixes || !isPrefixed(url));
 
 /** @type {import("astro").MiddlewareHandler} */
 export async function onRequest(request, next) {
