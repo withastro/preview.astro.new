@@ -34,10 +34,11 @@ const config = {
 	// These examples require SSR which won’t work in this deployment model.
 	ssr: { skip: true },
 	hackernews: { skip: true },
-	// Starlight prefixes global navigation links with base correctly. Those should not get an additional prefix.
+	// These sites prefix links with base correctly. Prefixed links should not get an additional prefix.
 	'starlight-basics': { noDuplicateLinkPrefixes: true },
 	'starlight-markdoc': { noDuplicateLinkPrefixes: true },
 	'starlight-tailwind': { noDuplicateLinkPrefixes: true },
+	'with-nanostores': { noDuplicateLinkPrefixes: true },
 };
 
 // Create output directory
