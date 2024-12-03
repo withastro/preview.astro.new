@@ -1,0 +1,9 @@
+{
+	"name": "@preview.astro.new/base-integration",
+	"version": "0.0.0",
+	"private": true,
+	"main": "index.mjs",
+	"dependencies": {
+		"linkedom": "^0.18.5"
+	}
+}
