@@ -19,7 +19,6 @@ export async function downloadTemplates(outDir, ref = 'latest') {
 	await downloadTemplate(`withastro/astro/examples#${ref}`, {
 		dir: outDir,
 		force: 'clean',
-		offline: 'prefer',
 	});
 
 	// Download Starlight templates
