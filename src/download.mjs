@@ -33,7 +33,9 @@ export async function downloadTemplates(outDir, ref = 'latest') {
 	for (const dir of starlightExamples) {
 		if (!dir.isDirectory()) continue;
 		// We copy and delete instead of renaming in case the temp directory is on a different drive like in Netlify CI.
-		await fs.cp(path.join(temporaryDir, dir.name), path.join(outDir, toStarlightName(dir.name)));
+		await fs.cp(path.join(temporaryDir, dir.name), path.join(outDir, toStarlightName(dir.name)), {
+			recursive: true,
+		});
 		await fs.rm(path.join(temporaryDir, dir.name), { recursive: true });
 	}
 	downloading.success();
