@@ -10,7 +10,7 @@
 	"keywords": [],
 	"author": "Chris Swithinbank <swithinbank@gmail.com>",
 	"license": "MIT",
-	"packageManager": "pnpm@9.14.2+sha512.6e2baf77d06b9362294152c851c4f278ede37ab1eba3a55fda317a4a17b209f4dbb973fb250a77abc463a341fcb1f17f17cfa24091c4eb319cda0d9b84278387",
+	"packageManager": "pnpm@11.0.0+sha512.5bd187500e49cc6c3d891d973b432c02b844a5eb7209172c90a517a3ef4f579ed5c23d409b699e6a9dc418ff7b2b1890e63f6d74f1d3fc49848f37779c89c84c",
 	"dependencies": {
 		"@bluwy/giget-core": "^0.1.1",
 		"@preview.astro.new/base-integration": "workspace:*",
