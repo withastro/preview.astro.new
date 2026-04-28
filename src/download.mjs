@@ -32,10 +32,11 @@ export async function downloadTemplates(outDir, ref = 'latest') {
 	const starlightExamples = await fs.readdir(temporaryDir, { withFileTypes: true });
 	for (const dir of starlightExamples) {
 		if (!dir.isDirectory()) continue;
-		await fs.rename(
-			path.join(temporaryDir, dir.name),
-			path.join(outDir, toStarlightName(dir.name))
-		);
+		// We copy and delete instead of renaming in case the temp directory is on a different drive like in Netlify CI.
+		await fs.cp(path.join(temporaryDir, dir.name), path.join(outDir, toStarlightName(dir.name)), {
+			recursive: true,
+		});
+		await fs.rm(path.join(temporaryDir, dir.name), { recursive: true });
 	}
 	downloading.success();
 
